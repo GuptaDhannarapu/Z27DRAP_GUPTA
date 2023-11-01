@@ -1,0 +1,67 @@
+managed implementation in class zbp_27d_i_sales_head unique;
+strict ( 2 );
+
+define behavior for Z27D_I_SALES_HEAD alias soHead
+with unmanaged save
+//persistent table y27d_db_vbak
+lock master
+authorization master ( instance )
+//etag master <field_name>
+{
+  create;
+  update;
+  delete;
+  association _soItem { create; }
+  mapping for y27d_db_vbak control y27_c_sales_head_dup corresponding
+    {
+      sales_doc  = vbeln;
+      block_status   = faksk;
+      sales_dist     = vtweg;
+      sales_div      = spart;
+      sales_org      = vkorg;
+      total_cost     = netwr;
+      cost_currency  = waerk;
+      created_by = ernam;
+      created_at   = erdat;
+      LastChangedTimestamp   = last_changed_timestamp;
+    }
+}
+
+define behavior for Z27D_I_SALES_ITEM alias soItem
+persistent table y27d_db_vbap
+lock dependent by _sohead
+authorization dependent by _sohead
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) sales_doc;
+  association _sohead;
+  association _soAttach { create; }
+  mapping for y27d_db_vbap control y27_c_sales_item_dup corresponding
+    {
+      sales_doc   = vbeln;
+      item_position   = posnr;
+      cost_currency   = waerk;
+      mat_desc        = arktx;
+      mat_num         = matnr;
+      quanity         = kpein;
+      total_item_cost = netwr;
+      unit_cost       = netpr;
+      unit            = kmein;
+      last_changed    = last_changed_timestamp;
+    }
+}
+
+define behavior for Z27D_I_SALES_ATTACH alias soAttach
+persistent table y27d_db_attach
+lock dependent by _sohead
+authorization dependent by _sohead
+//etag master <field_name>
+{
+  update;
+  delete;
+  field ( readonly ) sales_doc, item_positon;
+  association _sohead;
+  association _soItem;
+}

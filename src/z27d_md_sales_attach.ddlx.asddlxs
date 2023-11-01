@@ -1,0 +1,30 @@
+@Metadata.layer: #CORE
+annotate view Z27D_C_SALES_ATTACH
+    with 
+{
+  
+  @UI.facet: [
+
+  { type: #IDENTIFICATION_REFERENCE, position: 1, id: 'soAttach',label:'Attachments' }
+  ]
+  @UI:{ lineItem: [{  position: 10, label: 'Postion', importance: #HIGH }],
+  identification: [{ position: 10, label: 'Postion' }] }
+  item_positon;
+
+  @UI:{ lineItem: [{  position: 20, label: 'Attach ID', importance: #HIGH }],
+  identification: [{ position: 20, label: 'Attach ID' }] }
+  attach_Id;
+
+  @UI:{ lineItem: [{  position: 30, label: 'Document', importance: #HIGH }],
+  identification: [{ position: 30, label: 'Document' }] }
+  Document;
+
+  @UI:{ lineItem: [{  position: 40, label: 'Comments', importance: #HIGH }],
+  identification: [{ position: 40, label: 'Comments' }]  }
+  Comments;
+
+  @UI:{ lineItem: [{  position: 50, label: 'Filename', importance: #HIGH } ],
+  identification: [{ position:50, label: 'Filename' }] }
+  Filename;
+    
+}
